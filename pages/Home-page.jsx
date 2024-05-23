@@ -1,5 +1,9 @@
 function HomePage() {
-  return <div></div>;
+  return (
+    <div>
+      <h1>You are in!</h1>
+    </div>
+  );
 }
 
 export default HomePage;

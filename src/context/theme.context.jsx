@@ -1,42 +1,46 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({
-    token: localStorage.getItem("token"),
-    user: null,
-  });
+  const [auth, setAuth] = useState("");
 
+  const token = localStorage.getItem("authToken");
   useEffect(() => {
-    if (auth.token) {
+    if (token) {
       axios
         .get(`${API_URL}/validate-token`, {
-          headers: { Authorization: `Bearer ${auth.token}` },
+          headers: { Authorization: `Bearer ${token}` },
         })
+
         .then((response) => {
           setAuth((prevState) => ({
             ...prevState,
             user: response.data.user,
           }));
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           localStorage.removeItem("token");
           setAuth({ token: null, user: null });
         });
     }
-  }, [auth.token]);
+  }, [token]);
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
       });
-      localStorage.setItem("token", response.data.token);
-      setAuth({ token: response.data.token, user: response.data.user });
+      console.log("Login response:", response.data.authToken);
+
+      localStorage.setItem("token", response.data.authToken);
+      console.log(response.data.authToken);
+
+      setAuth({ token: response.data.authToken, user: response.data.user });
     } catch (error) {
       console.error("Login failed", error);
       throw error;
@@ -55,4 +59,6 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+const useAuth = () => useContext(AuthContext);
+
+export { AuthContext, AuthProvider, useAuth };
