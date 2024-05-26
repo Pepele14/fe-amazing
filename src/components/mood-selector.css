@@ -1,0 +1,60 @@
+/* MoodSelector.css */
+.mood-selector {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.mood-options {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mood-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.mood-option:hover {
+  transform: scale(1.1);
+}
+
+.mood-icon {
+  font-size: 40px;
+}
+
+.mood-text {
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.mood-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin: auto;
+}
+
+.mood-icon img {
+  display: none; /* Hide the img element */
+}
+
+.mood-option.happy .mood-icon {
+  background-image: url("../assets/happy.png");
+}
+
+.mood-option.happy:hover .mood-icon {
+  background-image: url("../assets/happy-hover.png");
+}
+
+.mood-option.sad .mood-icon {
+  background-image: url("../assets/sad.png");
+}
+
+.mood-option.sad:hover .mood-icon {
+  background-image: url("../assets/sadHover.png");
+}

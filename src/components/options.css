@@ -1,0 +1,13 @@
+.option-box {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.option-box:hover {
+  transform: scale(1.05);
+}

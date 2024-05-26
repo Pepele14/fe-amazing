@@ -1,4 +1,4 @@
-import logo from "../src/assets/logo-color.png";
+import logo from "../assets/logo-color.png";
 
 function Header() {
   return (
@@ -30,7 +30,7 @@ function Header() {
                 <a
                   className="nav-link active"
                   aria-current="page"
-                  href="#"
+                  href="/diary"
                   style={{ color: "#F9F7F7" }}
                 >
                   MyDiary

@@ -1,0 +1,9 @@
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #3f72af; /* Optional: background color for the footer */
+  padding: 10px; /* Optional: padding for spacing */
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
