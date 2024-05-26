@@ -76,6 +76,9 @@ const MoodSelector = ({ onSelectMood }) => {
   }, []);
 
   const handleSelectMood = (mood) => {
+    const handleSelectMood = (mood) => {
+      onSelectMood(mood);
+    };
     fetch(`${API_URL}/api/moods`, {
       method: "POST",
       headers: {
@@ -97,7 +100,7 @@ const MoodSelector = ({ onSelectMood }) => {
 
   return (
     <div className="mood-selector">
-      <WelcomeText>Welcome back Pipi!</WelcomeText>
+      <WelcomeText>Welcome back!</WelcomeText>
       {showQuestion && !moodSelected && (
         <QuestionText>How do you feel?</QuestionText>
       )}

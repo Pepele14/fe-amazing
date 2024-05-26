@@ -14,6 +14,7 @@ import MoodSelector from "./components/MoodSelector";
 import MyDiary from "./pages/MyDiary-page";
 import "./App.css";
 import LiveAssistant from "./components/LiveAssistant";
+import PublicArea from "./pages/PublicArea";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -54,6 +55,7 @@ function App() {
           element={<MoodSelector onSelectMood={handleMoodSelection} />}
         />
         <Route path="/liveassistant" component={LiveAssistant} />
+        <Route path="/publicarea" element={<PublicArea />} />
 
         <Route path="/diary" element={<MyDiary />} />
       </Routes>

@@ -32,6 +32,11 @@
   transition: background-color 0.3s ease;
 }
 
+.diary-buttons {
+  display: flex;
+  justify-content: center;
+}
+
 .feedback-button:hover {
   background-color: #0056b3;
 }
@@ -41,3 +46,58 @@
   font-size: 16px;
   white-space: pre-wrap;
 }
+
+.date-display {
+  margin-left: 30px;
+  margin-top: 10px;
+  color: #333;
+  font-size: 30px;
+}
+
+.diary-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for notifications */
+.notification {
+  position: fixed;
+  top: 105px;
+  right: 20px;
+  background-color: #4caf50; /* Green */
+  color: white;
+  padding: 16px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.notification.show {
+  opacity: 1;
+}
+
+/* .public-note {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.public-note-header {
+  font-size: 0.8em;
+  color: #888;
+  margin-bottom: 8px;
+} */

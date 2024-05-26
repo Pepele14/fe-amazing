@@ -37,7 +37,11 @@ function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#" style={{ color: "#F9F7F7" }}>
+                <a
+                  className="nav-link"
+                  href="/publicarea"
+                  style={{ color: "#F9F7F7" }}
+                >
                   Public Area
                 </a>
               </li>
