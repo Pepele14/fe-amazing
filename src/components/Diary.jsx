@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./diary.css";
+import NoteCalendar from "./NoteCalendar";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Diary = () => {
@@ -10,6 +12,8 @@ const Diary = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [notification, setNotification] = useState("");
   const [feedbackButtonDisabled, setFeedbackButtonDisabled] = useState(false);
+  const [notes, setNotes] = useState([]);
+
   const navigate = useNavigate();
 
   const showNotification = (message) => {
@@ -21,7 +25,7 @@ const Diary = () => {
 
   const handleSavePrivate = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/notes/private`, {
+      const response = await fetch(`${API_URL}/api/private`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +137,6 @@ const Diary = () => {
                 Get Feedback
               </button>
             )}
-            {isButtonClicked && <div className="feedback">{feedback}</div>}
           </div>
         </div>
         <div className="diary-right">

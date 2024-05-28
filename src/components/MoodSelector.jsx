@@ -43,14 +43,24 @@ const WelcomeText = styled.h1`
 const QuestionText = styled.h2`
   animation: ${fadeIn} 2s ease-in forwards;
   opacity: 0;
-  animation-delay: 2s;
+  animation-delay: 1s;
   animation-fill-mode: forwards;
 `;
 
 const MoodsDisplay = styled.h2`
   animation: ${fadeIn} 2s ease-in forwards;
   opacity: 0;
-  animation-delay: 2s;
+  animation-fill-mode: forwards;
+`;
+
+const MoodOption = styled.div`
+  display: inline-block;
+  text-align: center;
+  margin: 0 10px;
+  cursor: pointer;
+  animation: ${fadeIn} 2s ease-in forwards;
+  opacity: 0;
+  animation-delay: 1s;
   animation-fill-mode: forwards;
 `;
 
@@ -67,7 +77,7 @@ const MoodSelector = ({ onSelectMood }) => {
 
     const moodTimer = setTimeout(() => {
       setShowMoods(true);
-    }, 4000);
+    }, 1500);
 
     return () => {
       clearTimeout(questionTimer);
@@ -76,9 +86,6 @@ const MoodSelector = ({ onSelectMood }) => {
   }, []);
 
   const handleSelectMood = (mood) => {
-    const handleSelectMood = (mood) => {
-      onSelectMood(mood);
-    };
     fetch(`${API_URL}/api/moods`, {
       method: "POST",
       headers: {
@@ -107,7 +114,7 @@ const MoodSelector = ({ onSelectMood }) => {
       {showMoods && !moodSelected && (
         <div className="mood-options">
           {moods.map((mood, index) => (
-            <div
+            <MoodOption
               key={index}
               className="mood-option"
               onClick={() => handleSelectMood(mood.text)}
@@ -119,7 +126,7 @@ const MoodSelector = ({ onSelectMood }) => {
                 alt={mood.text}
               />
               <div className="mood-text">{mood.text}</div>
-            </div>
+            </MoodOption>
           ))}
         </div>
       )}

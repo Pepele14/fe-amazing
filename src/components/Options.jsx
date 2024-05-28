@@ -8,8 +8,11 @@ const Options = ({ onSelectOption }) => {
   const handleSelectOption = (option) => {
     if (option === "Write") {
       navigate("/diary");
-    } else {
-      onSelectOption(option);
+    } else if (option === "Talk") {
+      navigate("/liveassistant");
+      {
+        onSelectOption(option);
+      }
     }
   };
 

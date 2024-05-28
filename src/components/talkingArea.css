@@ -1,0 +1,19 @@
+.talking-area {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+}
+
+.talking-area button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.talking-area button:active {
+  background: darkblue;
+}

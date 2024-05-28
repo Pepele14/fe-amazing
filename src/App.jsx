@@ -4,42 +4,20 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-// import { useAuth } from "./context/theme.context";
 import { useContext } from "react";
 import { AuthContext } from "./context/theme.context";
 import SignupPage from "./pages/Signup-page";
 import LoginPage from "./pages/Login-page";
 import HomePage from "./pages/Home-page";
-import MoodSelector from "./components/MoodSelector";
 import MyDiary from "./pages/MyDiary-page";
 import "./App.css";
-import LiveAssistant from "./components/LiveAssistant";
+import LiveAssistant from "./pages/Live-assistant";
 import PublicArea from "./pages/PublicArea";
+import ProfilePage from "./pages/Profile-page";
 
 function App() {
   const { auth } = useContext(AuthContext);
-  // console.log(auth.token);
-
-  // const token = localStorage.getItem("authToken");
-  // console.log(token, "fromlocal");
-
-  // console.log("Auth Token:", auth.token);
-  const handleMoodSelection = (mood) => {
-    fetch("/api/moods", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ mood }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Mood stored:", data);
-      })
-      .catch((error) => {
-        console.error("Error storing mood:", error);
-      });
-  };
+  const token = localStorage.getItem("token");
 
   return (
     <Router>
@@ -48,15 +26,16 @@ function App() {
         <Route path="/auth/signup" element={<SignupPage />} />
         <Route
           path="/"
-          element={auth.token ? <HomePage /> : <Navigate to="/auth/login" />}
+          element={token ? <HomePage /> : <Navigate to="/auth/login" />}
         />
-        <Route
+        {/* <Route
           path="/mood-selector"
           element={<MoodSelector onSelectMood={handleMoodSelection} />}
-        />
-        <Route path="/liveassistant" component={LiveAssistant} />
-        <Route path="/publicarea" element={<PublicArea />} />
+        /> */}
 
+        <Route path="/liveassistant" element={<LiveAssistant />} />
+        <Route path="/publicarea" element={<PublicArea />} />
+        <Route path="/profilepage" element={<ProfilePage />} />
         <Route path="/diary" element={<MyDiary />} />
       </Routes>
     </Router>

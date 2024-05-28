@@ -10,7 +10,6 @@ function Header() {
         <div className="container-fluid">
           <a className="navbar-brand" href="/" style={{ color: "#F9F7F7" }}>
             <img src={logo} alt="Logo" style={{ height: "80px" }} />{" "}
-            {/* Adjust height as necessary */}
           </a>
           <button
             className="navbar-toggler"
@@ -30,6 +29,16 @@ function Header() {
                 <a
                   className="nav-link active"
                   aria-current="page"
+                  href="/liveassistant"
+                  style={{ color: "#F9F7F7" }}
+                >
+                  Live Assistant
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
                   href="/diary"
                   style={{ color: "#F9F7F7" }}
                 >
@@ -42,13 +51,13 @@ function Header() {
                   href="/publicarea"
                   style={{ color: "#F9F7F7" }}
                 >
-                  Public Area
+                  Public Pages
                 </a>
               </li>
               <li className="nav-item">
                 <a
                   className="nav-link"
-                  href="/profile"
+                  href="/profilepage"
                   style={{ color: "#F9F7F7" }}
                 >
                   Profile
