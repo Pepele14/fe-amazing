@@ -2,8 +2,24 @@
 
 body {
   font-family: "Dancing Script", cursive;
+  font-size: 18px;
+  background-color: #3f72af;
+  color: white;
 }
 
 .nav-link {
   font-size: 1.5rem;
+}
+
+h1 {
+  font-size: 4.5em;
+}
+
+h2 {
+  font-size: 3em;
+  font-family: "Raleway", sans-serif;
+}
+
+p {
+  font-family: "Raleway", sans-serif;
 }

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./diary.css";
-import NoteCalendar from "./NoteCalendar";
+import "./Diary.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -12,7 +11,6 @@ const Diary = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [notification, setNotification] = useState("");
   const [feedbackButtonDisabled, setFeedbackButtonDisabled] = useState(false);
-  const [notes, setNotes] = useState([]);
 
   const navigate = useNavigate();
 
@@ -24,11 +22,14 @@ const Diary = () => {
   };
 
   const handleSavePrivate = async () => {
+    const token = localStorage.getItem("token"); // Retrieve the token from local storage
+
     try {
-      const response = await fetch(`${API_URL}/api/private`, {
+      const response = await fetch(`${API_URL}/api/notes/private`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ content: diaryText }),
       });
@@ -38,13 +39,11 @@ const Diary = () => {
       }
 
       const data = await response.json();
-      console.log("Private note saved:", data);
       showNotification("Private note saved successfully!");
       setDiaryText("");
       setFeedback("");
       setIsButtonClicked(false);
     } catch (error) {
-      console.error("Error saving private note:", error);
       showNotification("Failed to save private note.");
     }
   };
@@ -64,21 +63,18 @@ const Diary = () => {
       }
 
       const data = await response.json();
-      console.log("Public note saved:", data);
       showNotification("Public note saved and published successfully!");
       setDiaryText("");
       setFeedback("");
       setIsButtonClicked(false);
       navigate("/publicarea");
     } catch (error) {
-      console.error("Error saving public note:", error);
       showNotification("Failed to save public note.");
     }
   };
 
   const handleGetFeedback = async () => {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    console.log("API Key:", apiKey);
 
     const options = {
       method: "POST",

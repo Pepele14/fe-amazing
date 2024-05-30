@@ -1,19 +1,77 @@
-.talking-area {
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
+.speech-to-text-container {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.talking-area button {
-  padding: 10px 20px;
-  border-radius: 5px;
-  background: blue;
-  color: white;
+.popup {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  color: black;
+  font-family: "Raleway", sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.transcript-container {
+  margin-top: 20px;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: white;
+  color: black;
+}
+
+.recognized-text {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  font-family: "Raleway", sans-serif;
+}
+
+button {
+  margin: 0 5px;
+  padding: 10px 10px;
   border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
   cursor: pointer;
 }
 
-.talking-area button:active {
-  background: darkblue;
+button:hover {
+  background-color: #0056b3;
+}
+
+.notification {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  z-index: 1001;
+}
+
+.notification.success {
+  background-color: green;
+  color: #fff;
+}
+
+.notification.error {
+  background-color: red;
+  color: #fff;
 }

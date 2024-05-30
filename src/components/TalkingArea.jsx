@@ -1,106 +1,118 @@
-import React, { useState, useEffect } from "react";
-import punycode from "punycode";
+import { useState, useEffect, useRef } from "react";
+import "./talkingArea.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const TalkingArea = () => {
-  const [transcript, setTranscript] = useState("");
+const SpeechToText = () => {
+  const [recognizedText, setRecognizedText] = useState("");
   const [isListening, setIsListening] = useState(false);
-  const [recognition, setRecognition] = useState(null);
+  const [transcripts, setTranscripts] = useState([]);
+  const [showPopup, setShowPopup] = useState(true);
+  const [notification, setNotification] = useState({ message: "", type: "" });
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRecognition) {
-      const recognitionInstance = new SpeechRecognition();
-      recognitionInstance.continuous = false;
-      recognitionInstance.interimResults = false;
-      recognitionInstance.lang = "en-US";
+    if (window.webkitSpeechRecognition) {
+      const recognition = new window.webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.lang = "en-US";
 
-      recognitionInstance.onresult = async (event) => {
-        const transcript = event.results[0][0].transcript;
-        setTranscript(transcript);
-        const responseFile = await getAIResponse(transcript);
-        const audio = new Audio(`${API_URL}/${responseFile}`);
-        audio.play();
+      recognition.onresult = (event) => {
+        const transcript =
+          event.results[event.results.length - 1][0].transcript;
+        setRecognizedText((prevText) => prevText + " " + transcript);
+        setTranscripts((prevTranscripts) => [...prevTranscripts, transcript]);
       };
 
-      recognitionInstance.onerror = (event) => {
+      recognition.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
       };
 
-      setRecognition(recognitionInstance);
+      recognitionRef.current = recognition;
     } else {
-      console.error("SpeechRecognition is not supported in this browser.");
+      console.error("Speech recognition is not supported in this browser.");
     }
   }, []);
 
-  const getAIResponse = async (transcript) => {
+  const startRecognition = () => {
+    recognitionRef.current.start();
+    setIsListening(true);
+    setShowPopup(false);
+  };
+
+  const stopRecognition = () => {
+    recognitionRef.current.stop();
+    setIsListening(false);
+  };
+
+  const showNotification = (message) => {
+    setNotification(message);
+    setTimeout(() => {
+      setNotification({ message: "", type: "" });
+    }, 3000);
+  };
+
+  const saveNote = async (isPrivate) => {
+    const route = isPrivate
+      ? `${API_URL}/api/notes/private`
+      : `${API_URL}/api/notes/public`;
+
+    const token = localStorage.getItem("token"); // Retrieve the token from local storage
     try {
-      const response = await fetch(`${API_URL}/api/ai/ai-assistant`, {
+      const response = await fetch(route, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ query: transcript }),
+        body: JSON.stringify({ content: transcripts.join(" ") }),
       });
-
       if (!response.ok) {
-        const errorMessage = `Network response was not ok: ${
-          response.status
-        } - ${await response.text()}`;
-        throw new Error(errorMessage);
+        throw new Error("Failed to save note");
       }
-
-      const data = await response.json();
-      return data.answer;
+      showNotification("Note saved successfully");
+      setTranscripts([]);
+      setRecognizedText("");
     } catch (error) {
-      console.error("Error getting AI response:", error);
-      return null;
-    }
-  };
-
-  const startListening = () => {
-    // Check if recognition is not already running
-    if (recognition && recognition.state !== "listening") {
-      recognition.start();
-      setIsListening(true);
-    }
-  };
-
-  const stopListening = () => {
-    if (recognition) {
-      setIsListening(false);
-      recognition.stop();
+      console.error(error);
+      showNotification({ message: "Failed to save note", type: "error" });
     }
   };
 
   return (
-    <div
-      className="talking-area"
-      style={{
-        borderRadius: "15px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        padding: "20px",
-        textAlign: "center",
-      }}
-    >
-      <button
-        onMouseDown={startListening}
-        onMouseUp={stopListening}
-        style={{
-          padding: "10px 20px",
-          borderRadius: "5px",
-          background: "blue",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        Hold to Talk
-      </button>
+    <div className="speech-to-text-container">
+      <h1 style={{ textAlign: `center` }}>Dictation</h1>
+      {showPopup && (
+        <div className="popup">
+          Click the "Start Talking" button to start dictation.
+          <button onClick={() => setShowPopup(false)}>Close</button>
+        </div>
+      )}
+      {notification.message && (
+        <div className={`notification ${notification.type}`}>
+          {notification.message}
+        </div>
+      )}
+      <div className="transcript-container">
+        {transcripts.map((transcript, index) => (
+          <div key={index}>{transcript}</div>
+        ))}
+      </div>
+      <div className="buttons-container">
+        {!isListening ? (
+          <button onClick={startRecognition}>Start Talking</button>
+        ) : (
+          <button onClick={stopRecognition}>Stop Talking</button>
+        )}
+        {!isListening && transcripts.length > 0 && (
+          <div>
+            <button onClick={() => saveNote(true)}>Save Private</button>
+            <button onClick={() => saveNote(false)}>Save Public</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default TalkingArea;
+export default SpeechToText;

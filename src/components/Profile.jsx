@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./profile.css";
 import LogoutButton from "./Logout";
-import MoodDistributionChart from "./MoodDistributionChart";
-import WeeklyMoodDistributionChart from "./WeeklyMoodDistributionChart";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Profile = ({ onDelete }) => {
   const [user, setUser] = useState({ name: "", email: "" });
   const [profilePic, setProfilePic] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,7 +52,7 @@ const Profile = ({ onDelete }) => {
   };
 
   return (
-    <div className="profile-page">
+    <div className="profile-info-div">
       <div
         className="profile-pic-container"
         style={{ backgroundImage: profilePic ? `url(${profilePic})` : "none" }}
@@ -65,8 +62,10 @@ const Profile = ({ onDelete }) => {
         {!profilePic && <span>Drop picture here</span>}
       </div>
       <div className="details-container">
-        <p>Name: {user.name}</p>
-        <p>Email: {user.email}</p>
+        <p>
+          <b>{user.name}</b>
+        </p>
+        <p>{user.email}</p>
       </div>
       <div className="button-container">
         <LogoutButton />

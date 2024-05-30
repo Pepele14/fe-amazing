@@ -7,7 +7,6 @@ function LiveAssistant() {
     <div>
       <Header />
       <TalkingArea />
-
       <Footer />
     </div>
   );

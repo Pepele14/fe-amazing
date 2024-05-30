@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 
 import {
@@ -58,8 +58,11 @@ const MoodDistributionChart = () => {
   }, []);
 
   return (
-    <div className="chart-container">
-      <h3>Overall Mood</h3>
+    <div
+      className="chart-container"
+      style={{ boxShadow: `0px 4px 8px rgba(0, 0, 0, 0.5)` }}
+    >
+      <h3 style={{ color: "black", marginTop: `50px` }}>Overall Mood</h3>
       <Bar data={moodData} />
     </div>
   );

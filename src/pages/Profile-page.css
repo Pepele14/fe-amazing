@@ -1,0 +1,22 @@
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.profile-container {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-container > * {
+  text-align: center;
+  width: 400px;
+  height: 500px;
+  background-color: #dbe2ef;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}

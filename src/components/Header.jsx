@@ -32,7 +32,7 @@ function Header() {
                   href="/liveassistant"
                   style={{ color: "#F9F7F7" }}
                 >
-                  Live Assistant
+                  Dictate
                 </a>
               </li>
               <li className="nav-item">

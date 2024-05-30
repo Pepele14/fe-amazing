@@ -62,8 +62,13 @@ const WeeklyMoodDistributionChart = () => {
   }, []);
 
   return (
-    <div className="chart-container">
-      <h3>Weekly Mood Distribution</h3>
+    <div
+      className="chart-container"
+      style={{ boxShadow: `0px 4px 8px rgba(0, 0, 0, 0.5)` }}
+    >
+      <h3 className="weeklyMood" style={{ color: "black", marginTop: `50px` }}>
+        Weekly Mood Distribution
+      </h3>
       <Line data={weeklyMoodData} />
     </div>
   );

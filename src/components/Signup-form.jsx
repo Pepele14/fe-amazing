@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import bgSunset from "../assets/sunset_sky.png";
 
 import "./signup-form.css";
 
@@ -15,7 +16,6 @@ function Signup() {
 
   async function submit(e) {
     e.preventDefault();
-    console.log("API_URL:", API_URL);
 
     try {
       await axios.post(`${API_URL}/auth/signup`, {
@@ -23,7 +23,6 @@ function Signup() {
         email,
         password,
       });
-      // Redirect user to the home page
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -31,10 +30,16 @@ function Signup() {
   }
 
   return (
-    <div className="signup">
+    <div
+      className="signup"
+      style={{ backgroundImage: `url(${bgSunset})`, backgroundSize: `cover` }}
+    >
       <form action="POST">
-        <div className="form-container">
-          <h1>Sign Up</h1>
+        <div
+          className="form-container"
+          style={{ backgroundColor: `rgba(0, 0, 0, 0.3)` }}
+        >
+          <h1 style={{ color: `white` }}>Sign Up</h1>
           <input
             type="name"
             onChange={(e) => {
@@ -60,8 +65,10 @@ function Signup() {
           />
           <input type="submit" onClick={submit} />
           <div className="centered">
-            <p>OR</p>
-            <Link to="/auth/login">Login Page</Link>
+            <p style={{ color: `white` }}>OR</p>
+            <Link to="/auth/login" style={{ color: `white` }}>
+              Login Page
+            </Link>
           </div>
         </div>
       </form>
