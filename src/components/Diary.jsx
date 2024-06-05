@@ -74,32 +74,22 @@ const Diary = () => {
   };
 
   const handleGetFeedback = async () => {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-
     const options = {
       method: "POST",
-      url: "https://chat-gpt26.p.rapidapi.com/",
+      url: "/api/get-feedback",
       headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": apiKey,
-        "X-RapidAPI-Host": "chat-gpt26.p.rapidapi.com",
+        "Content-Type": "application/json",
       },
       data: {
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "user",
-            content: diaryText,
-          },
-        ],
+        diaryText: diaryText,
       },
     };
 
     try {
       const response = await axios.request(options);
-      setFeedback(response.data.choices[0].message.content);
+      setFeedback(response.data);
       setIsButtonClicked(true);
-      setFeedbackButtonDisabled(true); // Disable the feedback button
+      setFeedbackButtonDisabled(true);
     } catch (error) {
       console.error("Error fetching feedback:", error);
     }

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import bgSunset from "../assets/sunset_sky.png";
-
-import "./signup-form.css";
+import "./Signup-form.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

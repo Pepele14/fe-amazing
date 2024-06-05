@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import "./talkingArea.css";
+import { useState, useEffect, useRef } from "react"; //create a mutable ref object.
+import "./TalkingArea.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,13 +13,14 @@ const SpeechToText = () => {
 
   useEffect(() => {
     if (window.webkitSpeechRecognition) {
-      const recognition = new window.webkitSpeechRecognition();
+      //checking if browser supports web speech api
+      const recognition = new window.webkitSpeechRecognition(); // creating a new speech rec. instance
       recognition.continuous = true;
       recognition.lang = "en-US";
 
       recognition.onresult = (event) => {
         const transcript =
-          event.results[event.results.length - 1][0].transcript;
+          event.results[event.results.length - 1][0].transcript; //Extracts the transcript from the event
         setRecognizedText((prevText) => prevText + " " + transcript);
         setTranscripts((prevTranscripts) => [...prevTranscripts, transcript]);
       };
@@ -28,7 +29,7 @@ const SpeechToText = () => {
         console.error("Speech recognition error:", event.error);
       };
 
-      recognitionRef.current = recognition;
+      recognitionRef.current = recognition; // Storing the recognition instance in the ref object
     } else {
       console.error("Speech recognition is not supported in this browser.");
     }

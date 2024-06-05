@@ -25,10 +25,22 @@ function App() {
           path="/"
           element={token ? <HomePage /> : <Navigate to="/auth/login" />}
         />
-        <Route path="/liveassistant" element={<LiveAssistant />} />
-        <Route path="/publicarea" element={<PublicArea />} />
-        <Route path="/profilepage" element={<ProfilePage />} />
-        <Route path="/diary" element={<MyDiary />} />
+        <Route
+          path="/liveassistant"
+          element={token ? <LiveAssistant /> : <Navigate to="/auth/login" />}
+        />
+        <Route
+          path="/publicarea"
+          element={token ? <PublicArea /> : <Navigate to="/auth/login" />}
+        />
+        <Route
+          path="/profilepage"
+          element={token ? <ProfilePage /> : <Navigate to="/auth/login" />}
+        />
+        <Route
+          path="/diary"
+          element={token ? <MyDiary /> : <Navigate to="/auth/login" />}
+        />
       </Routes>
     </Router>
   );

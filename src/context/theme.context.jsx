@@ -35,11 +35,8 @@ const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log("Login response:", response.data.authToken);
 
       localStorage.setItem("token", response.data.authToken);
-      console.log(response.data.authToken);
-
       setAuth({ token: response.data.authToken, user: response.data.user });
     } catch (error) {
       console.error("Login failed", error);
@@ -59,6 +56,6 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const useAuth = () => useContext(AuthContext);
+const useAuth = () => useContext(AuthContext); //create a custom hook to use AuthContext
 
 export { AuthContext, AuthProvider, useAuth };

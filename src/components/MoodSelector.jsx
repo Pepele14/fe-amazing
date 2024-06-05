@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import "./mood-selector.css";
+import "./Mood-selector.css";
 import happy from "../assets/happy.png";
 import happyHover from "../assets/happyHover.png";
 import sad from "../assets/sad.png";

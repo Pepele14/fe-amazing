@@ -1,4 +1,4 @@
-import "./options.css";
+import "./Options.css";
 import { useNavigate } from "react-router-dom";
 
 const Options = ({ onSelectOption }) => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./public-area.css";
+import "./Public-area.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
