@@ -85,24 +85,30 @@ const MoodSelector = ({ onSelectMood }) => {
     };
   }, []);
 
-  const handleSelectMood = (mood) => {
-    fetch(`${API_URL}/api/moods`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ mood }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Mood stored:", data);
-        setMoodSelected(true);
-      })
-      .catch((error) => {
-        console.error("Error storing mood:", error);
+  const handleSelectMood = async (mood) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(`${API_URL}/api/moods`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ mood }),
       });
 
-    onSelectMood(mood);
+      if (!response.ok) {
+        throw new Error("Server responded with an error");
+      }
+
+      const data = await response.json();
+      console.log("Mood stored:", data);
+      setMoodSelected(true);
+      onSelectMood(mood);
+    } catch (error) {
+      console.error("Error storing mood:", error);
+    }
   };
 
   return (

@@ -64,7 +64,7 @@ const NoteCard = ({ note }) => {
 
   const shortContent = note.content.substring(0, 50);
   const content = isExpanded ? note.content : `${shortContent}...`;
-  const [color] = useState(getRandomColor()); // Initialize color once
+  const [color] = useState(getRandomColor());
 
   return (
     <div className="note-card" style={{ backgroundColor: color }}>

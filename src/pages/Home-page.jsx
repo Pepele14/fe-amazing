@@ -1,30 +1,12 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import MoodSelector from "../components/MoodSelector";
+import React, { useState } from "react";
 
-function HomePage() {
+const HomePage = () => {
   const handleMoodSelection = (mood) => {
-    fetch("/api/moods", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ mood }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Server responded with an error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Mood stored:", data);
-      })
-      .catch((error) => {
-        console.error("Error storing mood:", error);
-      });
+    console.log("Mood selected:", mood);
   };
-
   return (
     <div>
       <Header />
@@ -32,6 +14,6 @@ function HomePage() {
       <Footer />
     </div>
   );
-}
+};
 
 export default HomePage;

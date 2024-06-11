@@ -22,7 +22,7 @@ const Diary = () => {
   };
 
   const handleSavePrivate = async () => {
-    const token = localStorage.getItem("token"); // Retrieve the token from local storage
+    const token = localStorage.getItem("token");
 
     try {
       const response = await fetch(`${API_URL}/api/notes/private`, {
