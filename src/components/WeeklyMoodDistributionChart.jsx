@@ -35,6 +35,7 @@ const WeeklyMoodDistributionChart = () => {
         const token = localStorage.getItem("token");
         const response = await fetch(`${API_URL}/api/weekly-distribution`, {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
