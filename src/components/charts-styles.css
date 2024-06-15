@@ -1,0 +1,22 @@
+/* .profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.profile-pic-container {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-container,
+.button-container {
+  flex: none;
+} */
