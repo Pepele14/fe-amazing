@@ -12,6 +12,7 @@ import "./App.css";
 import LiveAssistant from "./pages/Live-assistant";
 import PublicArea from "./pages/PublicArea";
 import ProfilePage from "./pages/Profile-page";
+import FullNote from "./components/FullPublicNote";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -40,6 +41,10 @@ function App() {
         <Route
           path="/diary"
           element={token ? <MyDiary /> : <Navigate to="/auth/login" />}
+        />
+        <Route
+          path="/notes/:noteId"
+          element={token ? <FullNote /> : <Navigate to="/auth/login" />}
         />
       </Routes>
     </Router>

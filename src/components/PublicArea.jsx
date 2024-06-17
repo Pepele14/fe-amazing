@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Public-area.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -9,6 +10,7 @@ const PublicArea = () => {
   const [hasMore, setHasMore] = useState(true);
   const [userLikes, setUserLikes] = useState([]);
   const fetchedPages = useRef(new Set());
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!fetchedPages.current.has(page)) {
@@ -107,6 +109,10 @@ const PublicArea = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const handleReadMore = (noteId) => {
+    navigate(`/notes/${noteId}`);
+  };
+
   return (
     <div className="public-area">
       <h2 style={{ marginBottom: "30px" }}>Public Diary Pages</h2>
@@ -118,7 +124,11 @@ const PublicArea = () => {
                 note.date
               ).toLocaleDateString()}`}
             </div>
-            <div className="public-note-content">{note.content}</div>
+            <div className="public-note-content">
+              {note.content.length > 41
+                ? `${note.content.substring(0, 41)}...`
+                : note.content}
+            </div>
             <div className="like-section">
               <button
                 onClick={() => handleLike(note._id)}
@@ -129,6 +139,12 @@ const PublicArea = () => {
               </button>
               <div className="like-count"> Seen {note.likeCount} times</div>
             </div>
+            <button
+              onClick={() => handleReadMore(note._id)}
+              className="read-button"
+            >
+              Read
+            </button>
           </div>
         ))}
       </div>
