@@ -6,18 +6,19 @@ const API_URL = import.meta.env.VITE_API_URL;
 const FullNote = () => {
   const { noteId } = useParams();
   const [note, setNote] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchNote = async () => {
       try {
         const response = await fetch(`${API_URL}/api/notes/public/${noteId}`);
         if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
         const data = await response.json();
         setNote(data);
       } catch (error) {
-        console.error("Error fetching note:", error);
+        setError(error.message);
       }
     };
     fetchNote();
