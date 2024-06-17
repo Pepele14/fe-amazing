@@ -6,9 +6,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 const PublicArea = () => {
   const [publicNotes, setPublicNotes] = useState([]);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true); // state to potentially load more contents if any available
+  const [hasMore, setHasMore] = useState(true);
   const [userLikes, setUserLikes] = useState([]);
-  const fetchedPages = useRef(new Set()); // Track fetched pages
+  const fetchedPages = useRef(new Set());
 
   useEffect(() => {
     if (!fetchedPages.current.has(page)) {
@@ -32,8 +32,13 @@ const PublicArea = () => {
       if (data.length < 8) {
         setHasMore(false);
       }
-      setPublicNotes((prevNotes) => [...prevNotes, ...data]);
-      fetchedPages.current.add(page); // Mark the page as fetched
+
+      const newNotes = data.filter(
+        (note) =>
+          !publicNotes.some((existingNote) => existingNote._id === note._id)
+      );
+      setPublicNotes((prevNotes) => [...newNotes]);
+      fetchedPages.current.add(page);
     } catch (error) {
       console.error("Error fetching public notes:", error);
     }
@@ -55,12 +60,8 @@ const PublicArea = () => {
       console.error("Error fetching user likes:", error);
     }
   };
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
 
   const handleLike = async (noteId) => {
-    console.log(`Liked note with ID: ${noteId}`);
     try {
       const response = await fetch(
         `${API_URL}/api/notes/public/${noteId}/like`,
@@ -76,15 +77,34 @@ const PublicArea = () => {
       }
       const data = await response.json();
 
+      // Update the like count and user likes immediately
       setPublicNotes((prevNotes) =>
         prevNotes.map((note) =>
-          note._id === noteId ? { ...note, likeCount: data.likeCount } : note
+          note._id === noteId
+            ? {
+                ...note,
+                likeCount:
+                  data.message === "Like added"
+                    ? note.likeCount + 1
+                    : note.likeCount - 1,
+              }
+            : note
         )
       );
-      fetchUserLikes();
+      setUserLikes((prevLikes) => {
+        if (data.message === "Like added") {
+          return [...prevLikes, noteId];
+        } else {
+          return prevLikes.filter((id) => id !== noteId);
+        }
+      });
     } catch (error) {
       console.error("Error handling like:", error);
     }
+  };
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -105,9 +125,9 @@ const PublicArea = () => {
                 className="like-button"
                 disabled={userLikes.includes(note._id)}
               >
-                {userLikes.includes(note._id) ? "Unlike" : "Like"}
+                {userLikes.includes(note._id) ? "Unseen" : "Seen"}
               </button>
-              <div className="like-count">{note.likeCount} Likes</div>
+              <div className="like-count"> Seen {note.likeCount} times</div>
             </div>
           </div>
         ))}
@@ -118,7 +138,7 @@ const PublicArea = () => {
           Load More
         </button>
       ) : (
-        <div className="no-more-notes">No more pages to load</div>
+        <div className="no-more-notes">No more notes to load</div>
       )}
     </div>
   );
