@@ -124,20 +124,20 @@ const PublicArea = () => {
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.8)",
           width: "100%",
           maxWidth: "1200px",
+          textAlign: "center",
         }}
       >
         <p
           style={{
-            textAlign: "center",
             fontSize: "20px",
           }}
         >
-          <span>Welcome to the community section of Amazing! </span>
-          <p>
-            Here, you can explore all the anonymously shared notes from our
-            users. Feel free to engage with them by leaving thoughtful comments
-            and offering supportive suggestions.
-          </p>
+          Welcome to the community section of Amazing!
+        </p>
+        <p>
+          Here, you can explore all the anonymously shared notes from our users.
+          Feel free to engage with them by leaving thoughtful comments and
+          offering supportive suggestions.
         </p>
       </div>
       <div
@@ -148,11 +148,11 @@ const PublicArea = () => {
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.8)",
           width: "100%",
           maxWidth: "1200px",
+          textAlign: "center",
         }}
       >
         <p
           style={{
-            textAlign: "center",
             fontSize: "20px",
             color: "black",
           }}
