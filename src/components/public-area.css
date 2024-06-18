@@ -32,29 +32,34 @@
 
 .like-section {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-top: 10px;
 }
 
-.like-button {
+.like-button,
+.read-button {
   background-color: #007bff;
   color: white;
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 5px;
+}
+
+.read-button {
+  background-color: #6c757d;
 }
 
 .like-count {
   font-size: 0.9em;
   color: #888;
+  margin-left: 45px;
 }
 
 .load-more-button {
   margin-top: 30px;
   margin-bottom: 30px;
-
   background-color: #28a745;
   color: white;
   border: none;
@@ -66,7 +71,6 @@
 .no-more-notes {
   margin-top: 30px;
   margin-bottom: 30px;
-
   font-size: 1.2em;
   color: #ffffff;
 }

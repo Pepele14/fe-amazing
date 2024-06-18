@@ -116,6 +116,53 @@ const PublicArea = () => {
   return (
     <div className="public-area">
       <h2 style={{ marginBottom: "30px" }}>Public Diary Pages</h2>
+      <div
+        style={{
+          backgroundColor: "#112D4E",
+          borderRadius: "13px",
+          marginBottom: "30px",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.8)",
+          width: "100%",
+          maxWidth: "1200px",
+        }}
+      >
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "20px",
+          }}
+        >
+          <span>Welcome to the community section of Amazing! </span>
+          <p>
+            Here, you can explore all the anonymously shared notes from our
+            users. Feel free to engage with them by leaving thoughtful comments
+            and offering supportive suggestions.
+          </p>
+        </p>
+      </div>
+      <div
+        style={{
+          backgroundColor: "#fec101",
+          borderRadius: "13px",
+          marginBottom: "30px",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.8)",
+          width: "100%",
+          maxWidth: "1200px",
+        }}
+      >
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "20px",
+            color: "black",
+          }}
+        >
+          We encourage everyone to maintain a respectful and encouraging
+          atmosphere, fostering a network where users can support each other
+          through their challenges and triumphs. Together, let's create a
+          positive and uplifting community experience.
+        </p>
+      </div>
       <div className="public-notes-container">
         {publicNotes.map((note) => (
           <div key={note._id} className="public-note">
@@ -137,14 +184,14 @@ const PublicArea = () => {
               >
                 {userLikes.includes(note._id) ? "Unseen" : "Seen"}
               </button>
+              <button
+                onClick={() => handleReadMore(note._id)}
+                className="read-button"
+              >
+                Read
+              </button>
               <div className="like-count"> Seen {note.likeCount} times</div>
             </div>
-            <button
-              onClick={() => handleReadMore(note._id)}
-              className="read-button"
-            >
-              Read
-            </button>
           </div>
         ))}
       </div>
