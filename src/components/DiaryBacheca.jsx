@@ -17,43 +17,82 @@ const getRandomColor = () => {
 
 const DiaryBacheca = () => {
   const [notes, setNotes] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("No token found");
-        }
+    fetchNotes(page);
+  }, [page]);
 
-        console.log("Fetching notes with token:", token);
+  const fetchNotes = async (page) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
 
-        const response = await fetch(`${API_URL}/api/notes/private`, {
+      console.log("Fetching notes with token:", token);
+
+      const response = await fetch(
+        `${API_URL}/api/notes/private?page=${page}&limit=10`,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch notes: ${response.statusText}`);
         }
+      );
 
-        const data = await response.json();
-        console.log("Fetched notes data:", data);
-        setNotes(data);
-      } catch (error) {
-        console.error("Error fetching notes:", error);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch notes: ${response.statusText}`);
       }
-    };
 
-    fetchNotes();
-  }, []);
+      const data = await response.json();
+      console.log("Fetched notes data:", data);
+      setNotes((prevNotes) => [...data]);
+      if (data.length < 10) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
+  };
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const loadMoreNotes = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   return (
     <div className="diary-bacheca">
-      {notes.map((note) => (
-        <NoteCard key={note._id} note={note} />
-      ))}
+      <div
+        className={`how-it-works-container ${isExpanded ? "expanded" : ""}`}
+        onClick={toggleExpand}
+      >
+        {isExpanded ? (
+          <p>
+            Welcome to your personal diary dashboard. Here you view your private
+            notes, add new entries, and manage your diary. Click on a note to
+            expand it and see more details or collapse it to see less. Use the
+            "Load More" button to fetch additional notes.
+          </p>
+        ) : (
+          <p>How it Works</p>
+        )}
+      </div>
+      <div className="notes-container">
+        {notes.map((note) => (
+          <NoteCard key={note._id} note={note} />
+        ))}
+        {hasMore && (
+          <button onClick={loadMoreNotes} className="load-more-button">
+            Load More
+          </button>
+        )}
+      </div>
     </div>
   );
 };
