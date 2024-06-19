@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import NoteCounter from "./NoteCounter";
 import "./Diary-bacheca.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -83,15 +84,18 @@ const DiaryBacheca = () => {
           <p>How it Works</p>
         )}
       </div>
-      <div className="notes-container">
-        {notes.map((note) => (
-          <NoteCard key={note._id} note={note} />
-        ))}
-        {hasMore && (
-          <button onClick={loadMoreNotes} className="load-more-button">
-            Load More
-          </button>
-        )}
+      <div className="notes-wrapper">
+        <NoteCounter count={notes.length} />
+        <div className="notes-container">
+          {notes.map((note) => (
+            <NoteCard key={note._id} note={note} />
+          ))}
+          {hasMore && (
+            <button onClick={loadMoreNotes} className="load-more-button">
+              Load More
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
