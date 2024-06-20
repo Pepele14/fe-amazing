@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import NoteCounter from "./NoteCounter";
+import Diary from "./Diary";
 import "./Diary-bacheca.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -21,6 +22,7 @@ const DiaryBacheca = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showDiary, setShowDiary] = useState(false);
 
   useEffect(() => {
     fetchNotes(page);
@@ -67,26 +69,44 @@ const DiaryBacheca = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const toggleShowDiary = () => {
+    setShowDiary(!showDiary);
+  };
+
+  const currentDate = new Date().toLocaleDateString();
   return (
     <div className="diary-bacheca">
-      <div
-        className={`how-it-works-container ${isExpanded ? "expanded" : ""}`}
-        onClick={toggleExpand}
-      >
-        {isExpanded ? (
-          <p>
-            Welcome to your personal diary dashboard. Here you view your private
-            notes, add new entries, and manage your diary. Click on a note to
-            expand it and see more details or collapse it to see less. Use the
-            "Load More" button to fetch additional notes.
-          </p>
-        ) : (
-          <p>How it Works</p>
-        )}
-      </div>
-      <div className="notes-wrapper">
+      <div className="top-row">
+        <div
+          className={`how-it-works-container ${isExpanded ? "expanded" : ""}`}
+          onClick={toggleExpand}
+        >
+          {isExpanded ? (
+            <p>
+              Welcome to your personal diary dashboard. Here you view your
+              private notes, add new entries, and manage your diary. Click on a
+              note to expand it and see more details or collapse it to see less.
+              Use the "Load More" button to fetch additional notes.
+            </p>
+          ) : (
+            <p>How it Works</p>
+          )}
+        </div>
         <NoteCounter count={notes.length} />
-        <div className="notes-container">
+      </div>
+      <div className="content-row">
+        <div className="left-section">
+          <div className="info-container">
+            <div className="info-box">{currentDate}</div>
+            <div className="info-box">Today's Mood: ""</div>
+          </div>
+          <div className="note-buttons">
+            <button onClick={toggleShowDiary}>Write a Note</button>
+            <button>Dictate a Note</button>
+          </div>
+          {showDiary && <Diary />}
+        </div>
+        <div className="right-section">
           {notes.map((note) => (
             <NoteCard key={note._id} note={note} />
           ))}
@@ -100,14 +120,13 @@ const DiaryBacheca = () => {
     </div>
   );
 };
-
 const NoteCard = ({ note }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
   const shortContent = note.content.substring(0, 50);
   const content = isExpanded ? note.content : `${shortContent}...`;
-  const [color] = useState(getRandomColor());
+  const color = getRandomColor();
 
   return (
     <div className="note-card" style={{ backgroundColor: color }}>

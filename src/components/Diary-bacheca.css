@@ -1,18 +1,25 @@
 .diary-bacheca {
   display: flex;
+  flex-direction: column;
   padding: 20px;
   gap: 20px;
 }
 
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .how-it-works-container {
-  flex: 0 0 70%;
+  flex: 0 0 65%;
   background-color: #112d4e;
   color: white;
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
-  max-height: 65px;
+  height: 67.68px;
   transition: max-height 0.3s ease-out;
 }
 
@@ -21,46 +28,89 @@
   transition: max-height 0.5s ease-in;
 }
 
-.notes-wrapper {
-  flex: 1;
+.how-it-works-container:hover {
+  background-color: #28a745;
+}
+
+.content-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.left-section {
+  flex: 0 0 65%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-height: 80vh;
-  overflow-y: hidden;
-  padding-right: 15px;
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  gap: 20px;
 }
 
-.notes-wrapper::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit browsers */
+.info-container {
+  display: flex;
+  justify-content: space-between;
 }
 
-.notes-container {
-  width: 100%;
-  background-color: #dbe2ef;
+.info-box {
+  flex: 1;
+  background-color: #112d4e;
+  color: white;
+  padding: 10px;
+  margin: 0 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.note-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.note-buttons button {
+  padding: 10px 20px;
+  background-color: #3f72af;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.note-buttons button:hover {
+  background-color: #112d4e;
+}
+
+.right-section {
+  flex: 0 0 30%;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.note-counter {
+  flex: 0 0 30%;
+  background-color: #112d4e;
+  color: white;
+  padding: 10px;
   border-radius: 10px;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 .note-card {
   background-color: #ffffff;
   border-radius: 10px;
   padding: 16px;
-  margin-bottom: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
-  width: 90%;
-  margin: 5% 5%;
+  width: 100%;
+  margin: 2% 0%;
 }
 
 .note-date {
   font-size: 0.9em;
-  color: #888;
+  color: #ebebeb;
 }
 
 .note-content {
-  color: #000;
+  color: #ffffff;
   font-family: "Raleway", sans-serif;
   margin-bottom: 10px;
 }
@@ -81,15 +131,4 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.note-counter {
-  width: 100%;
-  margin: 0 5% 20px 5%;
-  background-color: #112d4e;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 1.2em;
 }

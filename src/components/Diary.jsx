@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Diary.css";
@@ -95,40 +95,11 @@ const Diary = () => {
     }
   };
 
-  const currentDate = new Date().toLocaleDateString();
-
   return (
     <div>
       {notification && (
         <div className={`notification show`}>{notification}</div>
       )}
-      <div className="date-display">{currentDate}</div>
-      <div className="diary-container">
-        <div className="diary-left">
-          <textarea
-            className="diary-textarea"
-            placeholder="Write your thoughts here..."
-            value={diaryText}
-            onChange={(e) => setDiaryText(e.target.value)}
-          />
-          <div className="diary-buttons">
-            <button onClick={handleSavePrivate}>Save Private</button>
-            <button onClick={handleSavePublic}>Save and Publish</button>
-            {!isButtonClicked && (
-              <button
-                className="feedback-button"
-                onClick={handleGetFeedback}
-                disabled={feedbackButtonDisabled}
-              >
-                Get Feedback
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="diary-right">
-          {isButtonClicked && <div className="feedback">{feedback}</div>}
-        </div>
-      </div>
     </div>
   );
 };
