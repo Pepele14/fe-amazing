@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Diary.css";
@@ -96,10 +96,28 @@ const Diary = () => {
   };
 
   return (
-    <div>
+    <div className="diary-container">
       {notification && (
         <div className={`notification show`}>{notification}</div>
       )}
+      <div className="diary-input-feedback">
+        <textarea
+          className="diary-textarea"
+          value={diaryText}
+          onChange={(e) => setDiaryText(e.target.value)}
+          placeholder="Write your note here..."
+        ></textarea>
+        <div className="feedback-container">
+          <p>{feedback}</p>
+        </div>
+      </div>
+      <div className="diary-buttons">
+        <button onClick={handleSavePrivate}>Save Private</button>
+        <button onClick={handleSavePublic}>Save Public</button>
+        <button onClick={handleGetFeedback} disabled={feedbackButtonDisabled}>
+          Get Feedback
+        </button>
+      </div>
     </div>
   );
 };

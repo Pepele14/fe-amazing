@@ -74,6 +74,7 @@ const DiaryBacheca = () => {
   };
 
   const currentDate = new Date().toLocaleDateString();
+
   return (
     <div className="diary-bacheca">
       <div className="top-row">
@@ -101,20 +102,24 @@ const DiaryBacheca = () => {
             <div className="info-box">Today's Mood: ""</div>
           </div>
           <div className="note-buttons">
-            <button onClick={toggleShowDiary}>Write</button>
-            <button>Dictate</button>
+            <button onClick={toggleShowDiary}>Write a Note</button>
+            <button>Dictate a Note</button>
           </div>
           {showDiary && <Diary />}
         </div>
         <div className="right-section">
-          {notes.map((note) => (
-            <NoteCard key={note._id} note={note} />
-          ))}
-          {hasMore && (
-            <button onClick={loadMoreNotes} className="load-more-button">
-              Load More
-            </button>
-          )}
+          <div className="notes-wrapper">
+            <div className="notes-container">
+              {notes.map((note) => (
+                <NoteCard key={note._id} note={note} />
+              ))}
+              {hasMore && (
+                <button onClick={loadMoreNotes} className="load-more-button">
+                  Load More
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

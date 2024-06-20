@@ -13,7 +13,6 @@ function MyDiary() {
         </h1>
         <DiaryBacheca />
       </div>
-      <Diary />
       <Footer />
     </div>
   );
