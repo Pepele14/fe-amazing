@@ -115,7 +115,9 @@ const PublicArea = () => {
 
   return (
     <div className="public-area">
-      <h2 style={{ marginBottom: "30px" }}>Public Diary Pages</h2>
+      <h1 style={{ marginBottom: "30px" }}>
+        <span style={{ color: "rgb(254, 193, 1)" }}>Public Diary</span> Pages
+      </h1>
       <div
         style={{
           backgroundColor: "#112D4E",

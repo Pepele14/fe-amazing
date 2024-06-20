@@ -101,8 +101,8 @@ const DiaryBacheca = () => {
             <div className="info-box">Today's Mood: ""</div>
           </div>
           <div className="note-buttons">
-            <button onClick={toggleShowDiary}>Write a Note</button>
-            <button>Dictate a Note</button>
+            <button onClick={toggleShowDiary}>Write</button>
+            <button>Dictate</button>
           </div>
           {showDiary && <Diary />}
         </div>

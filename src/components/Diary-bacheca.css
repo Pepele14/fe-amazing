@@ -21,11 +21,16 @@
   overflow: hidden;
   height: 67.68px;
   transition: max-height 0.3s ease-out;
+  text-align: center;
 }
 
 .how-it-works-container.expanded {
   max-height: 150px;
   transition: max-height 0.5s ease-in;
+}
+
+.how-it-works-container:hover {
+  transform: scale(1.03);
 }
 
 .how-it-works-container:hover {
@@ -53,7 +58,7 @@
 .info-box {
   flex: 1;
   background-color: #112d4e;
-  color: white;
+  color: 3f72af;
   padding: 10px;
   margin: 0 10px;
   text-align: center;
@@ -63,20 +68,22 @@
 .note-buttons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 0px;
 }
 
 .note-buttons button {
   padding: 10px 20px;
-  background-color: #3f72af;
+  background-color: #000000;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 150px;
 }
 
 .note-buttons button:hover {
-  background-color: #112d4e;
+  background-color: rgb(254, 193, 1);
+  color: black;
 }
 
 .right-section {
@@ -95,6 +102,10 @@
   font-size: 1.2em;
 }
 
+.note-counter:hover {
+  transform: scale(1.05);
+}
+
 .note-card {
   background-color: #ffffff;
   border-radius: 10px;
@@ -106,7 +117,12 @@
 
 .note-date {
   font-size: 0.9em;
-  color: #ebebeb;
+  color: #ffffff;
+  font: "Montserrat Alternates";
+}
+
+.info-box:hover {
+  transform: scale(1.05);
 }
 
 .note-content {
