@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import NoteCounter from "./NoteCounter";
 import Diary from "./Diary";
+import SpeechToText from "./TalkingArea";
+
 import "./Diary-bacheca.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -23,6 +25,7 @@ const DiaryBacheca = () => {
   const [hasMore, setHasMore] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showDiary, setShowDiary] = useState(false);
+  const [showSpeechToText, setShowSpeechToText] = useState(false);
 
   useEffect(() => {
     fetchNotes(page);
@@ -38,7 +41,7 @@ const DiaryBacheca = () => {
       console.log("Fetching notes with token:", token);
 
       const response = await fetch(
-        `${API_URL}/api/notes/private?page=${page}&limit=10`,
+        `${API_URL}/api/notes/private?page=${page}&limit=4`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,8 +55,8 @@ const DiaryBacheca = () => {
 
       const data = await response.json();
       console.log("Fetched notes data:", data);
-      setNotes((prevNotes) => [...data]);
-      if (data.length < 10) {
+      setNotes(() => [...data]);
+      if (data.length < 4) {
         setHasMore(false);
       }
     } catch (error) {
@@ -69,8 +72,14 @@ const DiaryBacheca = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const toggleShowDiary = () => {
-    setShowDiary(!showDiary);
+  const handleWriteNoteClick = () => {
+    setShowDiary(true);
+    setShowSpeechToText(false);
+  };
+
+  const handleDictateNoteClick = () => {
+    setShowDiary(false);
+    setShowSpeechToText(true);
   };
 
   const currentDate = new Date().toLocaleDateString();
@@ -102,21 +111,24 @@ const DiaryBacheca = () => {
             <div className="info-box">Today's Mood: ""</div>
           </div>
           <div className="note-buttons">
-            <button onClick={toggleShowDiary}>Write a Note</button>
-            <button>Dictate a Note</button>
+            <button onClick={handleWriteNoteClick}>Write a Note</button>
+            <button onClick={handleDictateNoteClick}>Dictate a Note</button>
           </div>
           {showDiary && <Diary />}
+          {showSpeechToText && <SpeechToText />}
         </div>
         <div className="right-section">
           <div className="notes-wrapper">
             <div className="notes-container">
-              {notes.map((note) => (
+              {notes.slice(0, page * 4).map((note) => (
                 <NoteCard key={note._id} note={note} />
               ))}
-              {hasMore && (
+              {hasMore ? (
                 <button onClick={loadMoreNotes} className="load-more-button">
                   Load More
                 </button>
+              ) : (
+                <p className="no-more-notes">No more notes to load</p>
               )}
             </div>
           </div>
@@ -125,11 +137,12 @@ const DiaryBacheca = () => {
     </div>
   );
 };
+
 const NoteCard = ({ note }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
-  const shortContent = note.content.substring(0, 50);
+  const shortContent = note.content.substring(0, 40);
   const content = isExpanded ? note.content : `${shortContent}...`;
   const color = getRandomColor();
 

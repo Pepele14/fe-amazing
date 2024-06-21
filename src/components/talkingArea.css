@@ -1,11 +1,13 @@
 .speech-to-text-container {
-  max-width: 400px;
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .popup {
-  position: fixed;
-  top: 20%;
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
@@ -20,7 +22,8 @@
 
 .transcript-container {
   margin-top: 20px;
-  height: 400px;
+  width: 100%;
+  height: 200px;
   overflow-y: auto;
   border-radius: 8px;
   padding: 10px;
@@ -28,6 +31,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   background-color: white;
   color: black;
+  position: relative;
 }
 
 .recognized-text {
@@ -38,7 +42,9 @@
 .buttons-container {
   display: flex;
   justify-content: center;
-  font-family: "Raleway", sans-serif;
+  font-family: "Montserrat Alternates", cursive, sans-serif;
+  width: 100%;
+  margin-top: 10px;
 }
 
 button {
@@ -52,7 +58,8 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: rgb(254, 193, 1);
+  color: #000;
 }
 
 .notification {

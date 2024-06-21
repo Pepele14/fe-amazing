@@ -82,10 +82,9 @@ const SpeechToText = () => {
 
   return (
     <div className="speech-to-text-container">
-      <h1 style={{ textAlign: `center` }}>Dictation</h1>
       {showPopup && (
         <div className="popup">
-          Click the "Start Talking" button to start dictation.
+          Click "Start Talking" to start dictation.
           <button onClick={() => setShowPopup(false)}>Close</button>
         </div>
       )}

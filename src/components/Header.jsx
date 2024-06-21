@@ -24,17 +24,6 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              {/* 'ms-auto' class for right alignment */}
-              <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/liveassistant"
-                  style={{ color: "#F9F7F7" }}
-                >
-                  Dictate
-                </a>
-              </li>
               <li className="nav-item">
                 <a
                   className="nav-link active"

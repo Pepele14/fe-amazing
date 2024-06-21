@@ -148,3 +148,9 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.no-more-notes {
+  text-align: center;
+  margin-top: 10px;
+  color: gray;
+}
