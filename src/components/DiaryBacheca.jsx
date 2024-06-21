@@ -142,7 +142,7 @@ const NoteCard = ({ note }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
-  const shortContent = note.content.substring(0, 40);
+  const shortContent = note.content.substring(0, 30);
   const content = isExpanded ? note.content : `${shortContent}...`;
   const color = getRandomColor();
 

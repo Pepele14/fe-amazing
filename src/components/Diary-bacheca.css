@@ -19,7 +19,7 @@
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
-  height: 67.68px;
+  max-height: 67.68px;
   transition: max-height 0.3s ease-out;
   text-align: center;
 }
@@ -31,9 +31,6 @@
 
 .how-it-works-container:hover {
   transform: scale(1.03);
-}
-
-.how-it-works-container:hover {
   background-color: #28a745;
 }
 
@@ -58,7 +55,7 @@
 .info-box {
   flex: 1;
   background-color: #112d4e;
-  color: 3f72af;
+  color: #ffffff;
   padding: 10px;
   margin: 0 10px;
   text-align: center;
