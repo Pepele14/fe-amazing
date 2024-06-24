@@ -27,10 +27,12 @@ const DiaryBacheca = () => {
   const [showDiary, setShowDiary] = useState(false);
   const [showSpeechToText, setShowSpeechToText] = useState(false);
   const [latestMood, setLatestMood] = useState("");
+  const [sentenceOfTheDay, setSentenceOfTheDay] = useState("");
 
   useEffect(() => {
     fetchNotes(page);
     fetchLatestMood();
+    fetchSentenceOfTheDay();
   }, [page]);
 
   const fetchNotes = async (page) => {
@@ -91,6 +93,35 @@ const DiaryBacheca = () => {
     }
   };
 
+  const fetchSentenceOfTheDay = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await fetch(
+        `${API_URL}/api/sentences/sentence-of-the-day`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch sentence of the day: ${response.statusText}`
+        );
+      }
+
+      const sentenceData = await response.json();
+      setSentenceOfTheDay(sentenceData.text);
+    } catch (error) {
+      console.error("Error fetching sentence of the day:", error);
+    }
+  };
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
@@ -134,8 +165,14 @@ const DiaryBacheca = () => {
       <div className="content-row">
         <div className="left-section">
           <div className="info-container">
-            <div className="info-box">{currentDate}</div>
-            <div className="info-box">Latest Mood: {latestMood}</div>
+            <div className="info-box" onClick={toggleExpand}>
+              {currentDate}
+              {isExpanded && <p>{sentenceOfTheDay}</p>}
+            </div>
+            <div className="info-box">
+              Latest Mood:{" "}
+              <span className="latest-mood-span">{latestMood}</span>
+            </div>
           </div>
           <div className="note-buttons">
             <button onClick={handleWriteNoteClick}>Write a Note</button>
