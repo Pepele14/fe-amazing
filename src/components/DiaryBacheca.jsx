@@ -57,7 +57,8 @@ const DiaryBacheca = () => {
       console.log("Fetched notes data:", data);
       setNotes(() => [...data]);
       if (data.length < 4) {
-        setHasMore(false);
+        console.log("remaining data:", data);
+        setHasMore(true);
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -108,7 +109,7 @@ const DiaryBacheca = () => {
         <div className="left-section">
           <div className="info-container">
             <div className="info-box">{currentDate}</div>
-            <div className="info-box">Today's Mood: ""</div>
+            <div className="info-box">Latest Mood: </div>
           </div>
           <div className="note-buttons">
             <button onClick={handleWriteNoteClick}>Write a Note</button>
@@ -128,7 +129,7 @@ const DiaryBacheca = () => {
                   Load More
                 </button>
               ) : (
-                <p className="no-more-notes">No more notes to load</p>
+                <p className="no-more-notes">All notes loaded</p>
               )}
             </div>
           </div>

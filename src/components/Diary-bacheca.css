@@ -22,6 +22,7 @@
   max-height: 67.68px;
   transition: max-height 0.3s ease-out;
   text-align: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .how-it-works-container.expanded {
@@ -60,6 +61,7 @@
   margin: 0 10px;
   text-align: center;
   border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .note-buttons {
@@ -97,6 +99,7 @@
   border-radius: 10px;
   text-align: center;
   font-size: 1.2em;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .note-counter:hover {
