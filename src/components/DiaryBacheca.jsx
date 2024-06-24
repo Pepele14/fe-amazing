@@ -26,9 +26,11 @@ const DiaryBacheca = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showDiary, setShowDiary] = useState(false);
   const [showSpeechToText, setShowSpeechToText] = useState(false);
+  const [latestMood, setLatestMood] = useState("");
 
   useEffect(() => {
     fetchNotes(page);
+    fetchLatestMood();
   }, [page]);
 
   const fetchNotes = async (page) => {
@@ -62,6 +64,30 @@ const DiaryBacheca = () => {
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
+    }
+  };
+
+  const fetchLatestMood = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await fetch(`${API_URL}/api/moods/latest`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch latest mood: ${response.statusText}`);
+      }
+
+      const moodData = await response.json();
+      setLatestMood(moodData.mood);
+    } catch (error) {
+      console.error("Error fetching latest mood:", error);
     }
   };
 
@@ -109,7 +135,7 @@ const DiaryBacheca = () => {
         <div className="left-section">
           <div className="info-container">
             <div className="info-box">{currentDate}</div>
-            <div className="info-box">Latest Mood: </div>
+            <div className="info-box">Latest Mood: {latestMood}</div>
           </div>
           <div className="note-buttons">
             <button onClick={handleWriteNoteClick}>Write a Note</button>
