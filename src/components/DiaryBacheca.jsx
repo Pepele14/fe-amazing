@@ -117,6 +117,7 @@ const DiaryBacheca = () => {
 
       const sentenceData = await response.json();
       setSentenceOfTheDay(sentenceData.text);
+      console.log(setSentenceOfTheDay(sentenceData.text));
     } catch (error) {
       console.error("Error fetching sentence of the day:", error);
     }
@@ -165,10 +166,13 @@ const DiaryBacheca = () => {
       <div className="content-row">
         <div className="left-section">
           <div className="info-container">
-            <div className="info-box" onClick={toggleExpand}>
-              {currentDate}
-              {isExpanded && <p>{sentenceOfTheDay}</p>}
+            <div
+              className={`info-box ${isExpanded ? "expanded" : ""}`}
+              onClick={toggleExpand}
+            >
+              {isExpanded ? <p>{sentenceOfTheDay}</p> : <p>{currentDate}</p>}
             </div>
+
             <div className="info-box">
               Latest Mood:{" "}
               <span className="latest-mood-span">{latestMood}</span>
