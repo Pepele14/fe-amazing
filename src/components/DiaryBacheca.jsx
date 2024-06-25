@@ -28,6 +28,7 @@ const DiaryBacheca = () => {
   const [showSpeechToText, setShowSpeechToText] = useState(false);
   const [latestMood, setLatestMood] = useState("");
   const [sentenceOfTheDay, setSentenceOfTheDay] = useState("");
+  const [isExpandedDate, setIsExpandedDate] = useState(false);
 
   useEffect(() => {
     fetchNotes(page);
@@ -141,6 +142,9 @@ const DiaryBacheca = () => {
     setShowSpeechToText(true);
   };
 
+  const toggleExpandDate = () => {
+    setIsExpandedDate(!isExpandedDate);
+  };
   const currentDate = new Date().toLocaleDateString();
 
   return (
@@ -167,13 +171,20 @@ const DiaryBacheca = () => {
         <div className="left-section">
           <div className="info-container">
             <div
-              className={`info-box ${isExpanded ? "expanded" : ""}`}
-              onClick={toggleExpand}
+              className={`info-box-date ${isExpandedDate ? "expanded1" : ""}`}
+              onClick={toggleExpandDate}
             >
-              {isExpanded ? <p>{sentenceOfTheDay}</p> : <p>{currentDate}</p>}
+              {isExpandedDate ? (
+                <p>
+                  {currentDate}
+                  {sentenceOfTheDay}
+                </p>
+              ) : (
+                <p>{currentDate}</p>
+              )}
             </div>
 
-            <div className="info-box">
+            <div className="info-box-mood">
               Latest Mood:{" "}
               <span className="latest-mood-span">{latestMood}</span>
             </div>

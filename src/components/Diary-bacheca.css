@@ -53,7 +53,8 @@
   justify-content: space-between;
 }
 
-.info-box {
+.info-box-date,
+.info-box-mood {
   flex: 1;
   background-color: #112d4e;
   color: #ffffff;
@@ -62,6 +63,11 @@
   text-align: center;
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.info-box-date.expanded1 {
+  max-height: 150px;
+  transition: max-height 0.5s ease-in;
 }
 
 .note-buttons {
@@ -121,8 +127,9 @@
   font: "Montserrat Alternates";
 }
 
-.info-box:hover {
+.info-box-date:hover {
   transform: scale(1.05);
+  background-color: #28a745;
 }
 
 .note-content {
