@@ -88,3 +88,27 @@ button:hover {
   width: 70%;
   margin: 20px auto;
 }
+
+.tag-selection {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag-selection button {
+  background-color: #f96363;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tag-selection button.selected {
+  background-color: #0ebb25;
+  color: white;
+  border-color: #007bff;
+}
+
+.tag-selection button:hover {
+  background-color: #d9ff00;
+}

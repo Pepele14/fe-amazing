@@ -5,12 +5,36 @@ import "./Diary.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const tagsList = [
+  "relationship",
+  "love",
+  "loneliness",
+  "friendship",
+  "work",
+  "health",
+  "family",
+  "happiness",
+  "sadness",
+  "anxiety",
+  "motivation",
+  "success",
+  "failure",
+  "personal growth",
+  "education",
+  "travel",
+  "hobbies",
+  "pets",
+  "fitness",
+  "diet",
+];
+
 const Diary = () => {
   const [diaryText, setDiaryText] = useState("");
   const [feedback, setFeedback] = useState("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [notification, setNotification] = useState("");
   const [feedbackButtonDisabled, setFeedbackButtonDisabled] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const navigate = useNavigate();
 
@@ -43,6 +67,7 @@ const Diary = () => {
       setDiaryText("");
       setFeedback("");
       setIsButtonClicked(false);
+      setSelectedTags([]);
     } catch (error) {
       showNotification("Failed to save private note.");
     }
@@ -67,6 +92,7 @@ const Diary = () => {
       setDiaryText("");
       setFeedback("");
       setIsButtonClicked(false);
+      setSelectedTags([]);
       navigate("/publicarea");
     } catch (error) {
       showNotification("Failed to save public note.");
@@ -95,11 +121,31 @@ const Diary = () => {
     }
   };
 
+  const handleTagSelect = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else if (selectedTags.length < 3) {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
   return (
     <div className="diary-container">
       {notification && (
         <div className={`notification show`}>{notification}</div>
       )}
+      <div className="tag-selection">
+        {tagsList.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            onClick={() => handleTagSelect(tag)}
+            className={selectedTags.includes(tag) ? "selected" : ""}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
       <div className="diary-input-feedback">
         <textarea
           className="diary-textarea"

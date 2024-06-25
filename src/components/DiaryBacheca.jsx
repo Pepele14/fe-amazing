@@ -175,10 +175,7 @@ const DiaryBacheca = () => {
               onClick={toggleExpandDate}
             >
               {isExpandedDate ? (
-                <p>
-                  {currentDate}
-                  {sentenceOfTheDay}
-                </p>
+                <p>{sentenceOfTheDay}</p>
               ) : (
                 <p>{currentDate}</p>
               )}
