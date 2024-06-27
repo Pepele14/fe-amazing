@@ -3,6 +3,29 @@ import "./TalkingArea.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const tagsList = [
+  "relationship",
+  "love",
+  "loneliness",
+  "friendship",
+  "work",
+  "health",
+  "family",
+  "happiness",
+  "sadness",
+  "anxiety",
+  "motivation",
+  "success",
+  "failure",
+  "personal growth",
+  "education",
+  "travel",
+  "hobbies",
+  "pets",
+  "fitness",
+  "diet",
+];
+
 const SpeechToText = () => {
   const [recognizedText, setRecognizedText] = useState("");
   const [isListening, setIsListening] = useState(false);
@@ -10,6 +33,7 @@ const SpeechToText = () => {
   const [showPopup, setShowPopup] = useState(true);
   const [notification, setNotification] = useState({ message: "", type: "" });
   const recognitionRef = useRef(null);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
     if (window.webkitSpeechRecognition) {
@@ -80,8 +104,28 @@ const SpeechToText = () => {
     }
   };
 
+  const handleTagSelect = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else if (selectedTags.length < 3) {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
   return (
     <div className="speech-to-text-container">
+      <div className="tag-selection">
+        {tagsList.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            onClick={() => handleTagSelect(tag)}
+            className={selectedTags.includes(tag) ? "selected" : ""}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
       {showPopup && (
         <div className="popup">
           Click "Start Talking" to start dictation.
