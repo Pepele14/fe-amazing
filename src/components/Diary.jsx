@@ -55,7 +55,7 @@ const Diary = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ content: diaryText }),
+        body: JSON.stringify({ content: diaryText, tags: selectedTags }),
       });
 
       if (!response.ok) {
@@ -80,7 +80,7 @@ const Diary = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: diaryText }),
+        body: JSON.stringify({ content: diaryText, tags: selectedTags }),
       });
 
       if (!response.ok) {

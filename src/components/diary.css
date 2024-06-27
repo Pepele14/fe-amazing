@@ -101,14 +101,15 @@ button:hover {
   padding: 5px 10px;
   border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .tag-selection button.selected {
-  background-color: #0ebb25;
+  background-color: #0cd227;
   color: white;
   border-color: #007bff;
 }
 
 .tag-selection button:hover {
-  background-color: #d9ff00;
+  background-color: rgb(254, 193, 1);
 }
