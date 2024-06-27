@@ -227,7 +227,16 @@ const NoteCard = ({ note }) => {
       <div className="note-date">
         {new Date(note.date).toLocaleDateString()}
       </div>
-      <div className="note-content">{content}</div>
+      <div className="note-content">
+        {content}
+        <div className="tags-container">
+          {note.tags.map((tag, index) => (
+            <div key={index} className="tag">
+              {tag}
+            </div>
+          ))}
+        </div>
+      </div>
       <button onClick={toggleExpand} className="note-button">
         {isExpanded ? "Show Less" : "Show More"}
       </button>

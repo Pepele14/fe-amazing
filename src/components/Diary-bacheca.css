@@ -165,3 +165,19 @@
 .latest-mood-span {
   color: rgb(253, 126, 20);
 }
+
+.tags-container {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #ec7676;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  font-family: "Montserrat Alternates";
+}
