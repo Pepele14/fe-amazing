@@ -181,3 +181,24 @@
   white-space: nowrap;
   font-family: "Montserrat Alternates";
 }
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-options {
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tags-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag.selected {
+  background-color: #3f72af;
+  color: white;
+}

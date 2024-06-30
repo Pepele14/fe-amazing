@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import NoteCounter from "./NoteCounter";
 import Diary from "./Diary";
 import SpeechToText from "./TalkingArea";
-
 import "./Diary-bacheca.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -29,6 +28,10 @@ const DiaryBacheca = () => {
   const [latestMood, setLatestMood] = useState("");
   const [sentenceOfTheDay, setSentenceOfTheDay] = useState("");
   const [isExpandedDate, setIsExpandedDate] = useState(false);
+  const [searchOptionVisible, setSearchOptionVisible] = useState(false);
+  const [selectedSearchOption, setSelectedSearchOption] = useState(null);
+  const [filteredNotes, setFilteredNotes] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
     fetchNotes(page);
@@ -126,6 +129,7 @@ const DiaryBacheca = () => {
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+    setIsExpandedDate(!isExpanded);
   };
 
   const loadMoreNotes = () => {
@@ -145,7 +149,26 @@ const DiaryBacheca = () => {
   const toggleExpandDate = () => {
     setIsExpandedDate(!isExpandedDate);
   };
+
+  const handleSearchClick = () => {
+    setSearchOptionVisible(!searchOptionVisible);
+    setSelectedSearchOption(null);
+    setFilteredNotes([]);
+  };
+
+  const handleSearchByTagClick = () => {
+    setSelectedSearchOption("tag");
+  };
+
+  const handleTagClick = (tag) => {
+    setSelectedTag(tag);
+    const filtered = notes.filter((note) => note.tags.includes(tag));
+    setFilteredNotes(filtered);
+  };
+
   const currentDate = new Date().toLocaleDateString();
+
+  const notesToDisplay = filteredNotes.length > 0 ? filteredNotes : notes;
 
   return (
     <div className="diary-bacheca">
@@ -166,6 +189,32 @@ const DiaryBacheca = () => {
           )}
         </div>
         <NoteCounter count={notes.length} />
+      </div>
+      <div className="search-container">
+        <button onClick={handleSearchClick}>Search</button>
+        {searchOptionVisible && (
+          <div
+            className={`search-options ${searchOptionVisible ? "visible" : ""}`}
+          >
+            <button onClick={handleSearchByTagClick}>Search by Tag</button>
+            <button onClick={() => setSelectedSearchOption("keyword")}>
+              Search by Keyword
+            </button>
+          </div>
+        )}
+        {selectedSearchOption === "tag" && (
+          <div className="tags-list">
+            {tagsList.map((tag, index) => (
+              <div
+                key={index}
+                className={`tag ${selectedTag === tag ? "selected" : ""}`}
+                onClick={() => handleTagClick(tag)}
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="content-row">
         <div className="left-section">
