@@ -6,6 +6,29 @@ import "./Diary-bacheca.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const tagsList = [
+  "relationship",
+  "love",
+  "loneliness",
+  "friendship",
+  "work",
+  "health",
+  "family",
+  "happiness",
+  "sadness",
+  "anxiety",
+  "motivation",
+  "success",
+  "failure",
+  "personal growth",
+  "education",
+  "travel",
+  "hobbies",
+  "pets",
+  "fitness",
+  "diet",
+];
+
 const getRandomColor = () => {
   const colors = [
     "rgba(255, 99, 132, 0.2)",
