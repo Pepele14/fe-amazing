@@ -213,32 +213,6 @@ const DiaryBacheca = () => {
         </div>
         <NoteCounter count={notes.length} />
       </div>
-      <div className="search-container">
-        <button onClick={handleSearchClick}>Search</button>
-        {searchOptionVisible && (
-          <div
-            className={`search-options ${searchOptionVisible ? "visible" : ""}`}
-          >
-            <button onClick={handleSearchByTagClick}>Search by Tag</button>
-            <button onClick={() => setSelectedSearchOption("keyword")}>
-              Search by Keyword
-            </button>
-          </div>
-        )}
-        {selectedSearchOption === "tag" && (
-          <div className="tags-list">
-            {tagsList.map((tag, index) => (
-              <div
-                key={index}
-                className={`tag ${selectedTag === tag ? "selected" : ""}`}
-                onClick={() => handleTagClick(tag)}
-              >
-                {tag}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
       <div className="content-row">
         <div className="left-section">
           <div className="info-container">
@@ -266,6 +240,34 @@ const DiaryBacheca = () => {
           {showSpeechToText && <SpeechToText />}
         </div>
         <div className="right-section">
+          <div className="search-container">
+            <button onClick={handleSearchClick}>Search</button>
+            {searchOptionVisible && (
+              <div
+                className={`search-options ${
+                  searchOptionVisible ? "visible" : ""
+                }`}
+              >
+                <button onClick={handleSearchByTagClick}>Search by Tag</button>
+                <button onClick={() => setSelectedSearchOption("keyword")}>
+                  Search by Keyword
+                </button>
+              </div>
+            )}
+            {selectedSearchOption === "tag" && (
+              <div className="tags-list">
+                {tagsList.map((tag, index) => (
+                  <div
+                    key={index}
+                    className={`tag ${selectedTag === tag ? "selected" : ""}`}
+                    onClick={() => handleTagClick(tag)}
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="notes-wrapper">
             <div className="notes-container">
               {notes.slice(0, page * 4).map((note) => (
