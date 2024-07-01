@@ -55,21 +55,37 @@ const DiaryBacheca = () => {
   const [selectedSearchOption, setSelectedSearchOption] = useState(null);
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
+  const [tagPage, setTagPage] = useState(1);
+  const [tagHasMore, setTagHasMore] = useState(true);
 
   useEffect(() => {
-    fetchNotes(page);
+    if (!selectedTag) {
+      fetchNotes(page);
+    } else {
+      fetchFilteredNotes(selectedTag, tagPage);
+    }
+  }, [page, tagPage]);
+
+  useEffect(() => {
     fetchLatestMood();
     fetchSentenceOfTheDay();
-  }, [page]);
+  }, []);
+
+  useEffect(() => {
+    if (selectedTag) {
+      setTagPage(1);
+      setFilteredNotes([]);
+      fetchFilteredNotes(selectedTag, 1);
+    }
+  }, [selectedTag]);
 
   const fetchNotes = async (page) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
+        //use navigate
       }
-
-      console.log("Fetching notes with token:", token);
 
       const response = await fetch(
         `${API_URL}/api/notes/private?page=${page}&limit=4`,
@@ -85,11 +101,9 @@ const DiaryBacheca = () => {
       }
 
       const data = await response.json();
-      console.log("Fetched notes data:", data);
       setNotes(() => [...data]);
       if (data.length < 4) {
-        console.log("remaining data:", data);
-        setHasMore(true);
+        setHasMore(false);
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -144,19 +158,55 @@ const DiaryBacheca = () => {
 
       const sentenceData = await response.json();
       setSentenceOfTheDay(sentenceData.text);
-      console.log(setSentenceOfTheDay(sentenceData.text));
     } catch (error) {
       console.error("Error fetching sentence of the day:", error);
     }
   };
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-    setIsExpandedDate(!isExpanded);
+  const fetchFilteredNotes = async (tag, page) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await fetch(
+        `${API_URL}/api/notes/private?tag=${tag}&page=${page}&limit=4`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch filtered notes: ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      setFilteredNotes((prevNotes) =>
+        page === 1 ? data : [...prevNotes, ...data]
+      );
+      if (data.length < 4) {
+        setTagHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching filtered notes:", error);
+    }
   };
 
-  const loadMoreNotes = () => {
-    setPage((prevPage) => prevPage + 1);
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleLoadMore = () => {
+    if (selectedTag) {
+      setTagPage((prevPage) => prevPage + 1);
+    } else {
+      setPage((prevPage) => prevPage + 1);
+    }
   };
 
   const handleWriteNoteClick = () => {
@@ -185,13 +235,11 @@ const DiaryBacheca = () => {
 
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
-    const filtered = notes.filter((note) => note.tags.includes(tag));
-    setFilteredNotes(filtered);
   };
 
   const currentDate = new Date().toLocaleDateString();
 
-  const notesToDisplay = filteredNotes.length > 0 ? filteredNotes : notes;
+  const notesToDisplay = selectedTag ? filteredNotes : notes;
 
   return (
     <div className="diary-bacheca">
@@ -255,7 +303,7 @@ const DiaryBacheca = () => {
               </div>
             )}
             {selectedSearchOption === "tag" && (
-              <div className="tags-list">
+              <div className="tags-list visible">
                 {tagsList.map((tag, index) => (
                   <div
                     key={index}
@@ -270,11 +318,11 @@ const DiaryBacheca = () => {
           </div>
           <div className="notes-wrapper">
             <div className="notes-container">
-              {notes.slice(0, page * 4).map((note) => (
+              {notesToDisplay.map((note) => (
                 <NoteCard key={note._id} note={note} />
               ))}
-              {hasMore ? (
-                <button onClick={loadMoreNotes} className="load-more-button">
+              {(selectedTag ? tagHasMore : hasMore) ? (
+                <button onClick={handleLoadMore} className="load-more-button">
                   Load More
                 </button>
               ) : (
