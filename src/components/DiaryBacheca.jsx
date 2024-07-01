@@ -197,6 +197,33 @@ const DiaryBacheca = () => {
     }
   };
 
+  const deleteNote = async (noteId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await fetch(`${API_URL}/api/notes/${noteId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete note: ${response.statusText}`);
+      }
+
+      setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+      setFilteredNotes((prevFilteredNotes) =>
+        prevFilteredNotes.filter((note) => note._id !== noteId)
+      );
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+  };
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
@@ -319,7 +346,7 @@ const DiaryBacheca = () => {
           <div className="notes-wrapper">
             <div className="notes-container">
               {notesToDisplay.map((note) => (
-                <NoteCard key={note._id} note={note} />
+                <NoteCard key={note._id} note={note} deleteNote={deleteNote} />
               ))}
               {(selectedTag ? tagHasMore : hasMore) ? (
                 <button onClick={handleLoadMore} className="load-more-button">
@@ -336,7 +363,7 @@ const DiaryBacheca = () => {
   );
 };
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, deleteNote }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
@@ -358,6 +385,10 @@ const NoteCard = ({ note }) => {
             </div>
           ))}
         </div>
+        <button
+          onClick={() => deleteNote(note._id)}
+          className="delete-button"
+        ></button>
       </div>
       <button onClick={toggleExpand} className="note-button">
         {isExpanded ? "Show Less" : "Show More"}
